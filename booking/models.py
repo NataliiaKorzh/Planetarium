@@ -24,8 +24,15 @@ def astronomy_show_image_file_path(instance, filename):
 class AstronomyShow(models.Model):
     title = models.CharField(max_length=255)
     description = models.CharField(max_length=255, blank=True, null=True)
-    show_theme = models.ManyToManyField(ShowTheme, related_name="astronomy_shows", blank=True)
-    image = models.ImageField(null=True, upload_to=astronomy_show_image_file_path)
+    show_theme = models.ManyToManyField(
+        ShowTheme,
+        related_name="astronomy_shows",
+        blank=True
+    )
+    image = models.ImageField(
+        null=True,
+        upload_to=astronomy_show_image_file_path
+    )
 
     class Meta:
         ordering = ["title"]
@@ -49,7 +56,10 @@ class PlanetariumDome(models.Model):
 
 class ShowSeason(models.Model):
     astronomy_show = models.ForeignKey(AstronomyShow, on_delete=models.CASCADE)
-    planetarium_dome = models.ForeignKey(PlanetariumDome, on_delete=models.CASCADE)
+    planetarium_dome = models.ForeignKey(
+        PlanetariumDome,
+        on_delete=models.CASCADE
+    )
     show_time = models.DateTimeField()
 
     def __str__(self):

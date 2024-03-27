@@ -19,14 +19,16 @@ class Migration(migrations.Migration):
             model_name="reservation",
             name="user",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL
             ),
         ),
         migrations.AddField(
             model_name="showseason",
             name="astronomy_show",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="booking.astronomyshow"
+                on_delete=django.db.models.deletion.CASCADE,
+                to="booking.astronomyshow",
             ),
         ),
         migrations.AddField(
@@ -41,7 +43,9 @@ class Migration(migrations.Migration):
             model_name="astronomyshow",
             name="show_theme",
             field=models.ManyToManyField(
-                blank=True, related_name="astronomy_shows", to="booking.showtheme"
+                blank=True,
+                related_name="astronomy_shows",
+                to="booking.showtheme",
             ),
         ),
         migrations.AddField(

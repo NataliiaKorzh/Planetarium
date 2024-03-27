@@ -67,8 +67,14 @@ class ShowSeasonSerializer(serializers.ModelSerializer):
 
 
 class ShowSeasonListSerializer(ShowSeasonSerializer):
-    astronomy_show_title = serializers.CharField(source="astronomy_show.title", read_only=True)
-    astronomy_show_image = serializers.ImageField(source="astronomy_show.image", read_only=True)
+    astronomy_show_title = serializers.CharField(
+        source="astronomy_show.title",
+        read_only=True,
+    )
+    astronomy_show_image = serializers.ImageField(
+        source="astronomy_show.image",
+        read_only=True,
+    )
     planetarium_dome_name = serializers.CharField(
         source="planetarium_dome.name", read_only=True
     )
@@ -125,7 +131,13 @@ class ShowSeasonDetailSerializer(ShowSeasonSerializer):
 
     class Meta:
         model = ShowSeason
-        fields = ("id", "show_time", "astronomy_show", "planetarium_dome", "taken_places")
+        fields = (
+            "id",
+            "show_time",
+            "astronomy_show",
+            "planetarium_dome",
+            "taken_places",
+        )
 
 
 class ReservationSerializer(serializers.ModelSerializer):

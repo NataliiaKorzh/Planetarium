@@ -106,7 +106,8 @@ class AstronomyShowViewSet(
             OpenApiParameter(
                 "title",
                 type=OpenApiTypes.STR,
-                description="Filter by astronomy show title (ex. ?title=solar)",
+                description="Filter by astronomy show"
+                            " title (ex. ?title=solar)",
             ),
         ]
     )
@@ -120,7 +121,8 @@ class ShowSeasonViewSet(viewsets.ModelViewSet):
         .select_related("astronomy_show", "planetarium_dome")
         .annotate(
             tickets_available=(
-                F("planetarium_dome__rows") * F("planetarium_dome__seats_in_row")
+                F("planetarium_dome__rows")
+                * F("planetarium_dome__seats_in_row")
                 - Count("tickets")
             )
         )
@@ -139,7 +141,9 @@ class ShowSeasonViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(show_time__date=date)
 
         if astronomy_show_id_str:
-            queryset = queryset.filter(astronomy_show_id=int(astronomy_show_id_str))
+            queryset = queryset.filter(
+                astronomy_show_id=int(astronomy_show_id_str)
+            )
 
         return queryset
 
@@ -157,7 +161,8 @@ class ShowSeasonViewSet(viewsets.ModelViewSet):
             OpenApiParameter(
                 "astronomy_show",
                 type=OpenApiTypes.INT,
-                description="Filter by astronomy show id (ex. ?astronomy-show=2)",
+                description="Filter by astronomy show"
+                            " id (ex. ?astronomy-show=2)",
             ),
             OpenApiParameter(
                 "date",
@@ -184,7 +189,8 @@ class ReservationViewSet(
     GenericViewSet,
 ):
     queryset = Reservation.objects.prefetch_related(
-        "tickets__show_season__astronomy_show", "tickets__show_season__planetarium_dome"
+        "tickets__show_season__astronomy_show",
+        "tickets__show_season__planetarium_dome",
     )
     serializer_class = ReservationSerializer
     pagination_class = ReservationPagination
