@@ -63,9 +63,8 @@ class AstronomyShowViewSet(
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
+        queryset = self.queryset.order_by("id")
         title = self.request.query_params.get("title")
-
-        queryset = self.queryset
 
         if title:
             queryset = queryset.filter(title__icontains=title)
@@ -134,7 +133,7 @@ class ShowSeasonViewSet(viewsets.ModelViewSet):
         date = self.request.query_params.get("date")
         astronomy_show_id_str = self.request.query_params.get("astronomy_show")
 
-        queryset = self.queryset
+        queryset = self.queryset.order_by("id")
 
         if date:
             date = datetime.strptime(date, "%Y-%m-%d").date()
