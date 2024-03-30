@@ -8,10 +8,14 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
+list_of_root = [
+    path("users/", include('user.urls')),
+    path("books/", include('booking.urls')),
+]
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/planetarium/", include("booking.urls", namespace="booking")),
-    path("api/user/", include("user.urls", namespace="user")),
+    path("api/", include(list_of_root)),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "api/doc/swagger/",

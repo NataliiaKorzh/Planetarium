@@ -55,10 +55,15 @@ class PlanetariumDome(models.Model):
 
 
 class ShowSeason(models.Model):
-    astronomy_show = models.ForeignKey(AstronomyShow, on_delete=models.CASCADE)
+    astronomy_show = models.ForeignKey(
+        AstronomyShow,
+        on_delete=models.CASCADE,
+        related_name="show_seasons"
+    )
     planetarium_dome = models.ForeignKey(
         PlanetariumDome,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name="show_seasons"
     )
     show_time = models.DateTimeField()
 

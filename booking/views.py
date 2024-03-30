@@ -28,7 +28,7 @@ from .serializers import (
     AstronomyShowDetailSerializer,
     AstronomyShowImageSerializer,
     ShowSeasonListSerializer,
-    ShowSeasonDetailSerializer,
+    ShowSeasonDetailSerializer, ReservationListSerializer,
 )
 
 
@@ -63,7 +63,7 @@ class AstronomyShowViewSet(
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
-        queryset = self.queryset.order_by("id")
+        queryset = self.queryset.order_by("id").prefetch_related("show_theme")
         title = self.request.query_params.get("title")
 
         if title:
@@ -81,7 +81,7 @@ class AstronomyShowViewSet(
         if self.action == "upload_image":
             return AstronomyShowImageSerializer
 
-        return AstronomyShowSerializer
+        return self.serializer_class
 
     @action(
         methods=["POST"],
@@ -116,7 +116,7 @@ class AstronomyShowViewSet(
 
 class ShowSeasonViewSet(viewsets.ModelViewSet):
     queryset = (
-        ShowSeason.objects.all()
+        ShowSeason.objects
         .select_related("astronomy_show", "planetarium_dome")
         .annotate(
             tickets_available=(
@@ -153,7 +153,7 @@ class ShowSeasonViewSet(viewsets.ModelViewSet):
         if self.action == "retrieve":
             return ShowSeasonDetailSerializer
 
-        return ShowSeasonSerializer
+        return self.serializer_class
 
     @extend_schema(
         parameters=[
@@ -200,9 +200,9 @@ class ReservationViewSet(
 
     def get_serializer_class(self):
         if self.action == "list":
-            return ReservationSerializer
+            return ReservationListSerializer
 
-        return ReservationSerializer
+        return self.serializer_class
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

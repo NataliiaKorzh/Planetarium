@@ -113,18 +113,19 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    show_season = ShowSeasonListSerializer(many=False, read_only=True)
+    show_season = ShowSeasonListSerializer(read_only=True)
 
 
 class TicketSeatsSerializer(TicketSerializer):
+
     class Meta:
         model = Ticket
         fields = ("row", "seat")
 
 
 class ShowSeasonDetailSerializer(ShowSeasonSerializer):
-    astronomy_show = AstronomyShowListSerializer(many=False, read_only=True)
-    planetarium_dome = PlanetariumDomeSerializer(many=False, read_only=True)
+    astronomy_show = AstronomyShowListSerializer(read_only=True)
+    planetarium_dome = PlanetariumDomeSerializer(read_only=True)
     taken_places = TicketSeatsSerializer(
         source="tickets", many=True, read_only=True
     )
