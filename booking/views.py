@@ -24,11 +24,11 @@ from .serializers import (
     PlanetariumDomeSerializer,
     ShowSeasonSerializer,
     ReservationSerializer,
-    AstronomyShowListSerializer,
     AstronomyShowDetailSerializer,
     AstronomyShowImageSerializer,
     ShowSeasonListSerializer,
-    ShowSeasonDetailSerializer, ReservationListSerializer,
+    ShowSeasonDetailSerializer,
+    ReservationListSerializer,
 )
 
 
@@ -72,8 +72,6 @@ class AstronomyShowViewSet(
         return queryset
 
     def get_serializer_class(self):
-        if self.action == "list":
-            return AstronomyShowListSerializer
 
         if self.action == "retrieve":
             return AstronomyShowDetailSerializer

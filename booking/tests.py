@@ -13,7 +13,7 @@ from booking.models import (
     ShowSeason,
 )
 from booking.serializers import (
-    AstronomyShowListSerializer,
+    AstronomyShowSerializer,
     AstronomyShowDetailSerializer,
 )
 
@@ -87,7 +87,7 @@ class AuthenticatedMovieApiTests(TestCase):
         res = self.client.get(ASTRONOMY_SHOW_URL)
 
         astronomy_shows = AstronomyShow.objects.all()
-        serializer = AstronomyShowListSerializer(astronomy_shows, many=True)
+        serializer = AstronomyShowSerializer(astronomy_shows, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -99,9 +99,9 @@ class AuthenticatedMovieApiTests(TestCase):
 
         res = self.client.get(ASTRONOMY_SHOW_URL, {"title": "show"})
 
-        serializer1 = AstronomyShowListSerializer(astronomy_show1)
-        serializer2 = AstronomyShowListSerializer(astronomy_show2)
-        serializer3 = AstronomyShowListSerializer(astronomy_show3)
+        serializer1 = AstronomyShowSerializer(astronomy_show1)
+        serializer2 = AstronomyShowSerializer(astronomy_show2)
+        serializer3 = AstronomyShowSerializer(astronomy_show3)
 
         self.assertIn(serializer1.data, res.data)
         self.assertIn(serializer2.data, res.data)
